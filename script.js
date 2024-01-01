@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const ballSpeedElement = document.getElementById("ballSpeed");
     const numBallsElement = document.getElementById("numBalls");
     const hitsCountElement = document.getElementById("hitsCount");
+    const playPauseBgMusicButton = document.getElementById("playPauseBgMusic");
 
     let animationId;
     let balls = [];
@@ -126,11 +127,25 @@ document.addEventListener("DOMContentLoaded", function () {
         hitsCountElement.innerText = hitsCount;
     }
 
+    function playPauseBgMusic() {
+        const bgMusic = document.getElementById("bgMusic");
+        const playPauseButton = document.getElementById("playPauseBgMusic");
+
+        if (bgMusic.paused) {
+            bgMusic.play();
+            playPauseButton.innerText = "⏸️";
+        } else {
+            bgMusic.pause();
+            playPauseButton.innerText = "🎵";
+        }
+    }
+
     pauseResumeButton.addEventListener("click", toggleAnimation);
     restartButton.addEventListener("click", restart);
     addBallButton.addEventListener("click", addBall);
     speedUpButton.addEventListener("click", speedUp);
     slowDownButton.addEventListener("click", slowDown);
+    playPauseBgMusicButton.addEventListener("click", playPauseBgMusic);
 
     // Initial ball
     createBall();
