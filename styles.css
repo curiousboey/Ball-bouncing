@@ -4,39 +4,38 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #ecf0f1;
+    background-color: #87CEEB; /* Sky Blue background */
+}
+
+.container {
+    perspective: 800px; /* Perspective for 3D effect */
 }
 
 .box {
     position: relative;
-    width: 600px;
-    height: 600px;
-    border: 6px solid #2c3e50;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: #ecf0f1;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    background-color: #2E8B57; /* Greenish color for the box */
+    border: 10px solid #228B22; /* Dark Green border */
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    transform: rotateX(30deg); /* Rotate the box for 3D effect */
 }
 
 .ball {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background-color: #3498db;
+    width: 50px;
+    height: 50px;
+    background: url('football-texture.jpg');
+    background-size: cover;
     border-radius: 50%;
-    animation: bounce 1s infinite ease-in-out;
+    border: 2px solid #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
 }
 
-.trail {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background-color: rgba(52, 152, 219, 0.6);
-    border-radius: 50%;
-    animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes bounce {
+/* Animation */
+@keyframes bounceAnimation {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
     }
@@ -45,14 +44,5 @@ body {
     }
     60% {
         transform: translateY(-15px);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0.8;
-    }
-    to {
-        opacity: 0;
     }
 }

@@ -1,15 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const box = document.querySelector(".box");
-    const audio = new Audio("hit_sound.mp3"); // Replace with the correct path
-
-    // Create a new element for the ball trail
-    const trail = document.createElement("div");
-    trail.classList.add("trail");
-    box.appendChild(trail);
-
     const ball = document.getElementById("ball");
+    const box = document.querySelector(".box");
+    const hitSound = document.getElementById("hitSound");
 
-    let posX = 5;
+    let posX = 6;
     let posY = 0;
     let speedX = 7;
     let speedY = 5;
@@ -20,39 +14,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (posX < 0 || posX > box.clientWidth - ball.clientWidth) {
             speedX = -speedX;
-            playHitSound(); // Play sound on wall hit
+            playHitSound();
         }
 
         if (posY < 0 || posY > box.clientHeight - ball.clientHeight) {
             speedY = -speedY;
-            playHitSound(); // Play sound on wall hit
+            playHitSound();
         }
 
-        // Update the ball's position
         ball.style.transform = `translate(${posX}px, ${posY}px)`;
-
-        // Update the trail's position
-        trail.style.left = `${posX}px`;
-        trail.style.top = `${posY}px`;
-
-        // Create a new trail element
-        const newTrail = document.createElement("div");
-        newTrail.classList.add("trail");
-        newTrail.style.left = `${posX}px`;
-        newTrail.style.top = `${posY}px`;
-
-        // Append the new trail element to the box
-        box.appendChild(newTrail);
-
-        // Remove the oldest trail element
-        if (box.children.length > 50) {
-            box.removeChild(box.children[0]);
-        }
     }
 
     function playHitSound() {
-        audio.currentTime = 0; // Reset the audio to the beginning
-        audio.play();
+        hitSound.currentTime = 0;
+        hitSound.play();
     }
 
     function animate() {
