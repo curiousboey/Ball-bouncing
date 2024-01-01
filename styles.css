@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.box {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    border: 2px solid #333;
+    overflow: hidden;
+}
+
+.ball {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #3498db;
+    border-radius: 50%;
+}
+
+.trail {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(52, 152, 219, 0.7);
+    border-radius: 50%;
+}
