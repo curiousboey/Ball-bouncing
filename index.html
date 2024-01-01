@@ -9,10 +9,16 @@
 <body>
     <div class="container">
         <h1 class="title">Ball-Box</h1>
+        <div class="data-container">
+            <p class="data-label">Ball Speed: <span id="ballSpeed">0</span></p>
+            <p class="data-label">No. of Balls: <span id="numBalls">1</span></p>
+            <p class="data-label hits-label">Hits Count: <span id="hitsCount">0</span></p>
+        </div>
         <div class="box">
             <div class="ball" id="ball"></div>
         </div>
     </div>
+    
     <div class="controls">
         <button id="pauseResumeButton">Pause</button>
         <button id="restartButton">Restart</button>

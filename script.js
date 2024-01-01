@@ -6,20 +6,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const addBallButton = document.getElementById("addBallButton");
     const speedUpButton = document.getElementById("speedUpButton");
     const slowDownButton = document.getElementById("slowDownButton");
+    const ballSpeedElement = document.getElementById("ballSpeed");
+    const numBallsElement = document.getElementById("numBalls");
+    const hitsCountElement = document.getElementById("hitsCount");
 
     let animationId;
     let balls = [];
     let ballSpeed = { x: 7, y: 5 };
+    let hitsCount = 0;
 
     function createBall() {
         const newBall = document.createElement("div");
         newBall.classList.add("ball");
         box.appendChild(newBall);
 
-        // Set background image for the newly created ball
         newBall.style.backgroundImage = "url('football-texture.jpg')";
 
         balls.push({ element: newBall, posX: 9, posY: 0, speed: { x: ballSpeed.x, y: ballSpeed.y } });
+        updateNumBalls();
     }
 
     function updateBallPosition(ball) {
@@ -29,11 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (ball.posX < 0 || ball.posX > box.clientWidth - ball.element.clientWidth) {
             ball.speed.x = -ball.speed.x;
             playHitSound();
+            updateHitsCount();
         }
 
         if (ball.posY < 0 || ball.posY > box.clientHeight - ball.element.clientHeight) {
             ball.speed.y = -ball.speed.y;
             playHitSound();
+            updateHitsCount();
         }
 
         ball.element.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
@@ -48,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
         balls.forEach((ball) => {
             updateBallPosition(ball);
         });
+
+        updateBallSpeedDisplay();
 
         animationId = requestAnimationFrame(animate);
     }
@@ -69,6 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         ballSpeed = { x: 7, y: 5 };
         balls = [];
+        hitsCount = 0;
+        updateNumBalls();
         createBall(); // Initial ball
         if (animationId === undefined) {
             animate();
@@ -83,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function speedUp() {
         ballSpeed.x += 1;
         ballSpeed.y += 1;
+        updateBallSpeedDisplay();
         updateBallSpeed();
     }
 
@@ -90,8 +101,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (ballSpeed.x > 1 && ballSpeed.y > 1) {
             ballSpeed.x -= 1;
             ballSpeed.y -= 1;
+            updateBallSpeedDisplay();
             updateBallSpeed();
         }
+    }
+
+    function updateBallSpeedDisplay() {
+        ballSpeedElement.innerText = `(${ballSpeed.x}, ${ballSpeed.y})`;
     }
 
     function updateBallSpeed() {
@@ -99,6 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
             ball.speed.x = ballSpeed.x;
             ball.speed.y = ballSpeed.y;
         });
+    }
+
+    function updateNumBalls() {
+        numBallsElement.innerText = balls.length;
+    }
+
+    function updateHitsCount() {
+        hitsCount++;
+        hitsCountElement.innerText = hitsCount;
     }
 
     pauseResumeButton.addEventListener("click", toggleAnimation);
