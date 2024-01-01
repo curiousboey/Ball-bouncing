@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const box = document.querySelector(".box");
-    const audio = new Audio("hit_sound.mp3"); // Replace "hit_sound.mp3" with the path to your audio file
+    const audio = new Audio("hit_sound.mp3"); // Replace with the correct path
 
     // Create a new element for the ball trail
     const trail = document.createElement("div");
@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let posX = 5;
     let posY = 0;
-    let speedX = 5;
-    let speedY = 2;
+    let speedX = 7;
+    let speedY = 5;
 
     function updateBallPosition() {
         posX += speedX;
