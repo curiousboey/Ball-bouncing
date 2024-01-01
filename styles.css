@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    perspective: 800px;
+    perspective: 1000px; /* Increase perspective for a stronger 3D effect */
     margin-top: 20px;
     text-align: center;
 }
@@ -32,7 +32,7 @@ body {
     border: 10px solid #228B22;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    transform: rotateX(30deg);
+    transform: rotateX(30deg) rotateY(0deg); /* Apply a rotation for a 3D effect */
 }
 
 .ball {
@@ -43,8 +43,8 @@ body {
     border-radius: 50%;
     border: 0px solid #333;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: rotateX(60deg) rotateY(0deg); /* Apply a rotation for a 3D effect */
 }
-
 .controls {
     display: flex;
     margin-top: 20px;
