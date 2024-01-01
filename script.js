@@ -1,32 +1,42 @@
-let animationId; // Declare animationId outside the event listener
-
 document.addEventListener("DOMContentLoaded", function () {
-    const ball = document.getElementById("ball");
     const box = document.querySelector(".box");
     const hitSound = document.getElementById("hitSound");
     const pauseResumeButton = document.getElementById("pauseResumeButton");
     const restartButton = document.getElementById("restartButton");
+    const addBallButton = document.getElementById("addBallButton");
+    const speedUpButton = document.getElementById("speedUpButton");
+    const slowDownButton = document.getElementById("slowDownButton");
 
-    let posX = 6;
-    let posY = 0;
-    let speedX = 7;
-    let speedY = 5;
+    let animationId;
+    let balls = [];
+    let ballSpeed = { x: 7, y: 5 };
 
-    function updateBallPosition() {
-        posX += speedX;
-        posY += speedY;
+    function createBall() {
+        const newBall = document.createElement("div");
+        newBall.classList.add("ball");
+        box.appendChild(newBall);
 
-        if (posX < 0 || posX > box.clientWidth - ball.clientWidth) {
-            speedX = -speedX;
+        // Set background image for the newly created ball
+        newBall.style.backgroundImage = "url('football-texture.jpg')";
+
+        balls.push({ element: newBall, posX: 9, posY: 0, speed: { x: ballSpeed.x, y: ballSpeed.y } });
+    }
+
+    function updateBallPosition(ball) {
+        ball.posX += ball.speed.x;
+        ball.posY += ball.speed.y;
+
+        if (ball.posX < 0 || ball.posX > box.clientWidth - ball.element.clientWidth) {
+            ball.speed.x = -ball.speed.x;
             playHitSound();
         }
 
-        if (posY < 0 || posY > box.clientHeight - ball.clientHeight) {
-            speedY = -speedY;
+        if (ball.posY < 0 || ball.posY > box.clientHeight - ball.element.clientHeight) {
+            ball.speed.y = -ball.speed.y;
             playHitSound();
         }
 
-        ball.style.transform = `translate(${posX}px, ${posY}px)`;
+        ball.element.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
     }
 
     function playHitSound() {
@@ -35,7 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function animate() {
-        updateBallPosition();
+        balls.forEach((ball) => {
+            updateBallPosition(ball);
+        });
+
         animationId = requestAnimationFrame(animate);
     }
 
@@ -51,20 +64,50 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function restart() {
-        posX = 6;
-        posY = 0;
-        speedX = 7;
-        speedY = 5;
-        ball.style.transform = `translate(${posX}px, ${posY}px)`;
+        balls.forEach((ball) => {
+            box.removeChild(ball.element);
+        });
+        ballSpeed = { x: 7, y: 5 };
+        balls = [];
+        createBall(); // Initial ball
         if (animationId === undefined) {
             animate();
         }
         pauseResumeButton.innerText = "Pause";
     }
 
+    function addBall() {
+        createBall();
+    }
+
+    function speedUp() {
+        ballSpeed.x += 1;
+        ballSpeed.y += 1;
+        updateBallSpeed();
+    }
+
+    function slowDown() {
+        if (ballSpeed.x > 1 && ballSpeed.y > 1) {
+            ballSpeed.x -= 1;
+            ballSpeed.y -= 1;
+            updateBallSpeed();
+        }
+    }
+
+    function updateBallSpeed() {
+        balls.forEach((ball) => {
+            ball.speed.x = ballSpeed.x;
+            ball.speed.y = ballSpeed.y;
+        });
+    }
+
     pauseResumeButton.addEventListener("click", toggleAnimation);
     restartButton.addEventListener("click", restart);
+    addBallButton.addEventListener("click", addBall);
+    speedUpButton.addEventListener("click", speedUp);
+    slowDownButton.addEventListener("click", slowDown);
 
-    // Initial animation
+    // Initial ball
+    createBall();
     animate();
 });
